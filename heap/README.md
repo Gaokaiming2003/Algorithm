@@ -56,3 +56,11 @@ bool isEmpty = min_heap.empty();
 vector<int> input{1,2,3,4,5};
 priority_queue<int, vector<int>, greater<int> > min_heap(input.begin(), input.end());
 ```
+
+## 堆的常见应用
+
+* 优先队列：堆通常作为实现优先队列的首选数据结构，其入队和出队操作的时间复杂度均为$O(log n)$,而建队操作为$O(n)$.
+* 堆排序
+* 获取最大的k个元素
+    
+

@@ -48,7 +48,16 @@
     "typeinfo": "cpp",
     "list": "cpp",
     "cstring": "cpp",
-    "queue": "cpp"
+    "queue": "cpp",
+    "ranges": "cpp",
+    "span": "cpp",
+    "xlocale": "cpp",
+    "xlocinfo": "cpp",
+    "xlocnum": "cpp",
+    "xmemory": "cpp",
+    "xstring": "cpp",
+    "xtr1common": "cpp",
+    "xutility": "cpp"
   },
   "files.defaultLanguage": "cpp"
 }
