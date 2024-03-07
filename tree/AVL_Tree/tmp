@@ -1,0 +1,24 @@
+/* 插入节点 */
+    void insert(int val){
+        root = insertHelper(root, val);
+    }
+
+    /* 递归插入（辅助） */
+    TreeNode* insertHelper(TreeNode* node, int val){
+
+        if(node == nullptr)
+            return new TreeNode(val);
+
+        /* 查找插入位置并插入节点 */
+        if(node -> val < val){
+            node -> right= insertHelper(node -> right, val);
+        }else if(node -> val > val)
+            node -> left= insertHelper(node -> left, val);
+        else 
+            return node; //重复节点不插入，直接返回
+        updateHeight(node);//更新节点高度
+
+        /* 执行旋转操作 */
+        node = rotate(node); //node为子树的根节点
+        return node;
+    }
