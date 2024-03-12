@@ -191,3 +191,132 @@ void backtrack(vector<TreeNode*> &state,vector<TreeNode*> &choices, vector<vecto
 0-1 背包问题通常使用动态规划解决，以达到更高的时间效率。\
 旅行商是一个著名的 NP-Hard 问题，常用解法有遗传算法和蚁群算法等。\
 最大团问题是图论中的一个经典问题，可用贪心算法等启发式算法来解决。
+
+### 子集和问题
+
+#### 不重复
+
+给定一个正整数数组 nums 和一个目标正整数 target ，请找出所有可能的组合\
+，使得组合中的元素和等于 target 。给定数组无重复元素，每个元\
+素可以被选取多次。请以列表形式返回这些组合，列表中不应包含重复组合。
+
+```c++
+
+#include<iostream>
+#include<vector>
+#include<algorithm>
+
+using namespace std;
+
+void backtrack(vector<int> &state, vector<int> &choices, int start, int target, vector<vector<int>> &res){
+    if(target == 0){
+        res.push_back(state);
+        return;
+    }
+
+    for(size_t i = start; i < choices.size(); i++){
+        int choice = choices[i];
+        if(target - choice < 0)
+            break;
+        
+        state.push_back(choice);
+        backtrack(state, choices, i, target - choice, res);
+        
+        state.pop_back();
+    }
+}
+vector<vector<int>> SubSet(vector<int> &nums, int target){
+    vector<int> state;
+    vector<vector<int>> res;
+
+    sort(nums.begin(), nums.end());
+    backtrack(state, nums, 0, target, res);
+    return res;
+}
+
+int main(){
+    vector<int> nums{1,2,3,4,5,6};
+    auto res = SubSet(nums, 5);
+    for(const vector<int> & bucket : res){
+        for(auto c : bucket)
+            cout << c << ' ';
+        cout << endl;
+    }
+}
+```
+
+#### 重复
+
+给定一个正整数数组 nums \
+和一个目标正整数 target ，请找出所有可能的组\
+合，使得组合中的元素和等于 target 。给定数组可能包含重复元素，\
+每个元素只可被选择一次。请以列表形式返回这些组合，列表中不应包含重复组合。
+
+```c++
+/* 给定一个正整数数组 nums 和一个目标正整数 target ，请找出所有可能的组合，使得组合中的元素和等于 target 。给定数组可能包含重复元素，
+每个元素只可被选择一次。请以列表形式返回这些组合，列表中不应包含重复组合。 */
+#include<iostream>
+#include<algorithm>
+#include<vector>
+
+using namespace std;
+
+void backtrack(vector<int> &state, vector<vector<int>> &res, int start, int target, vector<int> &choices){
+    //子集和等于target时，记录解
+    if(target == 0){
+        res.push_back(state);
+        return;
+    }
+    //遍历所有选择
+    //剪枝二：从start开始遍历，避免生成重复子集
+    //剪枝三：从start开始遍历，避免选择同一元素
+    for(size_t i = start; i < choices.size(); i++){
+        // 剪枝一：若子集和超过target，因为choices是递增，所以i之后的都不满足
+        int choice = choices[i];
+        if(target - choice < 0)
+            break;
+
+            //剪枝四：如果该元素与左边元素相等，说明该搜索分支重复，直接跳过
+        if(i > start && choice == choices[i - 1])
+            continue;
+        
+        state.push_back(choice);
+        //从i+1开始，因为不能重复选择同一位置的元素
+        backtrack(state, res, i + 1, target - choice, choices);
+
+        state.pop_back();
+    }
+}
+
+vector<vector<int>> combinationSum(vector<int> &nums, int target){
+    vector<int> state;
+    vector<vector<int>> res;
+
+    sort(nums.begin(), nums.end());
+
+    backtrack(state, res, 0, target, nums);
+
+    return res;
+}
+
+int main(){
+    vector<int> nums{1,2,2,3,4};
+    auto res = combinationSum(nums, 4);
+    for(const auto &bucket : res){
+        for(auto c : bucket)
+            cout << c << ' ';
+        cout << endl;
+    }
+}
+```
+
+### n皇后问题
+
+根据国际象棋的规则，皇后可以攻击与同处一行、一列或一条斜线上的棋子。给定n\个皇后和一个$n\times n$
+ 大小的棋盘，寻找使得所有皇后之间无法相互攻击的摆放方案。
+
+#### 逐行放置粗略
+
+#### 列和对角线剪枝
+
+![alt text](img/Snipaste_2024-03-12_22-52-24.png)
