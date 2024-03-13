@@ -61,5 +61,6 @@
     "unordered_set": "cpp",
     "xtree": "cpp"
   },
-  "files.defaultLanguage": "cpp"
+  "files.defaultLanguage": "cpp",
+  "C_Cpp.errorSquiggles": "disabled"
 }
